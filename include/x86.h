@@ -39,4 +39,14 @@ static inline void insl(uint32_t port, void *addr, int cnt)
                      : "memory", "cc");
 }
 
+static inline void sti()
+{
+    __asm__ volatile("sti");
+}
+
+static inline void hlt()
+{
+    __asm__ volatile("hlt");
+}
+
 #endif

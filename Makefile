@@ -56,7 +56,9 @@ core: $(OBJ)/init.o \
 $(OBJ)/printk.o $(OBJ)/string.o $(OBJ)/console.o \
 $(OBJ)/debug.o \
 $(OBJ)/gdt.o $(OBJ)/gdt_s.o \
-$(OBJ)/idt.o $(OBJ)/idt_s.o
+$(OBJ)/idt.o $(OBJ)/idt_s.o \
+$(OBJ)/timer.o
+
 	$(E)echo 'generate' $@{$^}...
 	$(E)$(LD) $(LDFLAGS) -T scripts/kernel.lds $^ -o $(BIN_DIR)/$@
 

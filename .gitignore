@@ -3,5 +3,5 @@
 *.d
 *.img
 !.gitignore
-kern
+core
 bootloader
