@@ -1,0 +1,4 @@
+file ./bin/core
+target remote :1234
+b kernel_init
+c
