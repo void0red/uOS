@@ -5,3 +5,5 @@
 !.gitignore
 core
 bootloader
+tags
+obj

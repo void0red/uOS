@@ -31,7 +31,7 @@ void ce_write_char(char c);
 void ce_write_str(char *str);
 void ce_write_num(uint32_t num);
 
-static uint16_t *video_mem = (uint16_t *)0xb8000;
+static uint16_t *video_mem = (uint16_t *)0xC00B8000;
 static uint8_t cursor_x = 0;
 static uint8_t cursor_y = 0;
 

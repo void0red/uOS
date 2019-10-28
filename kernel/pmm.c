@@ -1,24 +1,48 @@
 #include <pmm.h>
 
+struct e820map *mem_info = (struct e820map *)mem_map;
+
+static uint32_t pmm_stack[PAGE_MAX_SIZE + 1];
+/*
+* //todo
+* here is a bug.
+* static variable `pmm_stack_top` is not 0 init.
+*/
+static uint32_t pmm_stack_top;
+uint32_t phy_page_count;
+
 void show_memory_map()
 {
+    for (int i = 0; i < mem_info->cnt; ++i)
+    {
+        uint32_t begin = mem_info->map[i].addr;
+        uint32_t end = begin + mem_info->map[i].size;
+        printk("[%d (%d)]: 0x%08X - 0x%08X\n", i, mem_info->map[i].type, begin, end);
+    }
+    printk("all available 0x%X pages\n", phy_page_count);
+    printk("\n");
+
     printk("kernel in memory begin: 0x%08X\n", kernel_begin);
     printk("kernel in memory end:   0x%08X\n", kernel_end);
     printk("kernel in memory used:   %d KB\n", (kernel_end - kernel_begin + 1023) / 1024);
 }
 
-static uint32_t pmm_stack[PAGE_MAX_SIZE + 1];
-static uint32_t pmm_stack_top;
-uint32_t phy_page_count;
-
 void init_pmm()
 {
-    uint32_t page_begin = ((uint32_t)(kernel_end + PMM_PAGE_SIZE - 1) & PHY_PAGE_MASK);
-    uint32_t page_end = QEMU_DEFAULT_MEM & PHY_PAGE_MASK;
-    for (uint32_t i = page_begin; i < page_end; i += PMM_PAGE_SIZE)
+    pmm_stack_top = 0;
+    printk("pmm_statck_top: %d\n", pmm_stack_top);
+    for (int i = 0; i < mem_info->cnt; ++i)
     {
-        pmm_free_page(i);
-        phy_page_count++;
+        if ((mem_type_t)(mem_info->map[i].type) == MEM_NORMAL && mem_info->map[i].addr >= KERNBASE)
+        {
+            uint32_t begin = mem_info->map[i].addr;
+            uint32_t end = begin + mem_info->map[i].size;
+            for (uint32_t page = begin; page < end; page += PGSIZE)
+            {
+                pmm_free_page(page);
+                phy_page_count++;
+            }
+        }
     }
 }
 

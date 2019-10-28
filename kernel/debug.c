@@ -34,11 +34,10 @@ void print_stack_trace()
 
 void panic(const char *msg)
 {
-    printk("*** System panic: %s\n", msg);
+    printkc(RC_BLACK, RC_RED, "*** System panic: %s\n", msg);
     print_stack_trace();
-    printk("***\n");
+    printkc(RC_BLACK, RC_RED, "***\n");
 }
-
 
 static void stab_binsearch(const elf_stab_t *stabs, int *region_left, int *region_right, int type, uint32_t addr)
 {

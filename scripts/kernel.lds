@@ -1,20 +1,11 @@
-ENTRY(kernel_init)
-OUTPUT_FORMAT("elf32-i386", "elf32-i386", "elf32-i386")
+ENTRY(kernel_entry)
+OUTPUT_FORMAT("elf32-i386")
 OUTPUT_ARCH(i386)
 SECTIONS {
-    . = 0x100000;
+    . = 0xC0100000;
 	PROVIDE(kernel_begin = .);
 	.text : {
 		*(.text .stub .text.* .gnu.linkonce.t.*)
-	}
-
-	.data : {
-		*(.data)
-        *(.rodata .rodata.*)        
-	}
-
-	.bss : {
-		*(.bss)
 	}
 
     .stab : {
@@ -31,9 +22,24 @@ SECTIONS {
 		BYTE(0)
 	}
 
+	. = ALIGN(0x1000);
+	.data : {
+		*(.data)
+        *(.rodata .rodata.*)
+	}
+
+	.bss : {
+		*(.bss)
+	}
+
+	. = ALIGN(0x1000);
+	.data.pgdir : {
+		*(.data.pgdir)
+	}
+
 	PROVIDE(kernel_end = .);
 
 	/DISCARD/ : {
-		*(.eh_frame .note.GNU-stack)
+		*(.eh_frame .note.GNU-stack .comment)
 	}
 }

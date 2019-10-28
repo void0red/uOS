@@ -5,18 +5,22 @@
 #include <idt.h>
 #include <timer.h>
 #include <pmm.h>
+#include <vmm.h>
 
 int kernel_init(void)
 {
     init_gdt();
     init_idt();
-    cli();
-    
+    init_timer(200);
+    // cli();
+
     ce_clear();
-    
+
     printkc(RC_BLACK, RC_LIGHT_GREEN, "uOS is loading...\n%d.%d.%d\n", 2019, 9, 9);
 
+    init_vmm();
+    init_pmm();
     show_memory_map();
-    
+
     hlt();
 }

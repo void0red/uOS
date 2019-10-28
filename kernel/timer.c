@@ -2,7 +2,8 @@
 void timer_callback(trapframe_t *regs)
 {
     static uint32_t tick = 0;
-    printkc(RC_BLACK, RC_RED, "Tick %d\n", tick++);
+    tick++;
+    // printkc(RC_BLACK, RC_RED, "Tick %d\n", tick++);
 }
 
 void init_timer(uint32_t frequency)

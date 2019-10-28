@@ -89,6 +89,7 @@ void init_idt()
     idt_flush((uint32_t)&idtr);
 
     sti();
+    
 }
 
 void isr_handler(trapframe_t *regs)
