@@ -60,6 +60,7 @@ boot_objects = $(call get_objects, $(BOOT))
 bootloader: $(boot_objects)
 	$(E)echo 'generate' $@{$^}...
 	$(E)$(LD) $(LDFLAGS) -N -T scripts/boot.lds $^ -o $@
+	$(E)cp $@ $(OBJ)/$(BOOT)
 	$(E)$(OBJCOPY) -S -O binary $@
 	$(E)dd if=/dev/zero of=$@.o bs=510 count=1
 	$(E)dd if=$@ of=$@.o conv=notrunc

@@ -23,4 +23,6 @@
 void init_vmm();
 static void page_fault(trapframe_t *frame);
 void switch_page(uint32_t page);
+
+extern uint32_t kernel_pgd[PGD_SIZE];
 #endif

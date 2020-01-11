@@ -3,11 +3,7 @@
 struct e820map *mem_info = (struct e820map *)mem_map;
 
 static uint32_t pmm_stack[PAGE_MAX_SIZE + 1];
-/*
-* //todo
-* here is a bug.
-* static variable `pmm_stack_top` is not 0 init.
-*/
+
 static uint32_t pmm_stack_top;
 uint32_t phy_page_count;
 
@@ -29,8 +25,6 @@ void show_memory_map()
 
 void init_pmm()
 {
-    pmm_stack_top = 0;
-    printk("pmm_statck_top: %d\n", pmm_stack_top);
     for (int i = 0; i < mem_info->cnt; ++i)
     {
         if ((mem_type_t)(mem_info->map[i].type) == MEM_NORMAL && mem_info->map[i].addr >= KERNBASE)

@@ -28,13 +28,13 @@ SECTIONS {
         *(.rodata .rodata.*)
 	}
 
-	.bss : {
-		*(.bss)
-	}
-
 	. = ALIGN(0x1000);
 	.data.pgdir : {
 		*(.data.pgdir)
+	}
+
+	.bss : {
+		*(.bss)
 	}
 
 	PROVIDE(kernel_end = .);
