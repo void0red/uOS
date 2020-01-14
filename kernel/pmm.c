@@ -31,6 +31,8 @@ void init_pmm()
         {
             uint32_t begin = mem_info->map[i].addr;
             uint32_t end = begin + mem_info->map[i].size;
+            if (begin < (uint32_t)kernel_end - VMA)
+                begin = ((uint32_t)kernel_end - VMA + 1023) & PHY_PAGE_MASK;
             for (uint32_t page = begin; page < end; page += PGSIZE)
             {
                 pmm_free_page(page);

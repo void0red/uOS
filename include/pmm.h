@@ -10,6 +10,7 @@
 #define PAGE_MAX_SIZE (PMM_MAX_SIZE / PGSIZE)
 #define PHY_PAGE_MASK 0xfffff000
 #define KERNBASE 0x100000
+#define VMA 0xc0000000
 
 // Type 1: Usable (normal) RAM
 // Type 2: Reserved - unusable
