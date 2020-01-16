@@ -91,7 +91,7 @@ static inline void list_swap(list_head_t *entry1, list_head_t *entry2)
 * @return: a pointer to the data struct containing the list_head_t structure.
 */
 #ifndef container_of
-#define container_of(ptr, type, member) \ 
+#define container_of(ptr, type, member) \
         (type *)((char *)(ptr) - (char *)&((type *)0)->member)
 #endif
 
@@ -99,7 +99,7 @@ static inline void list_swap(list_head_t *entry1, list_head_t *entry2)
     container_of(ptr, type, member)
 
 #define __container_of(ptr, sample, member) \
-    (void *)container_of((ptr), typeof(*(sample)), member)
+    (void *)container_of((ptr), __typeof__(*(sample)), member)
 
 /*
 * Example:

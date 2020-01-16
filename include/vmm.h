@@ -18,9 +18,11 @@
 #define PTE_INDEX(x) (((x) >> 12) & 0x3ff)
 #define OFF_INDEX(x) ((x)&0xfff)
 
-#define MEM_SIZE (100 << 20)
+/*
+* 0xC000_0000-0xE000_0000
+*/
+#define MEM_SIZE (512 << 20)
 #define PTE_COUNT (MEM_SIZE / (PGSIZE << 10))
-
 
 static void page_fault(trapframe_t *frame);
 static void flush_pte(uint32_t va);

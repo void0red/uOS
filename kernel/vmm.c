@@ -77,7 +77,6 @@ void map(uint32_t *pgd, uint32_t va, uint32_t pa, uint32_t flags)
     {
         pte = (uint32_t *)pmm_alloc_page();
         pgd[pgd_idx] = (uint32_t)pte | PG_P | PG_W;
-        memset((uint8_t *)pte, 0, PGSIZE);
     }
     pte = (uint32_t *)((uint32_t)pte + PAGE_OFFSET);
     pte[pte_idx] = (pa & PAGE_MASK) | flags;
