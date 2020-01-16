@@ -63,6 +63,24 @@ static inline int list_empty(list_head_t *head)
     return head->next == head;
 }
 
+static inline void list_replace(list_head_t *old, list_head_t *node)
+{
+    node->next = old->next;
+    node->next->prev = node;
+    node->prev = old->prev;
+    node->prev->next = node;
+}
+
+static inline void list_swap(list_head_t *entry1, list_head_t *entry2)
+{
+    list_head_t *pos = entry2->prev;
+    list_del(entry2);
+    list_replace(entry1, entry2);
+    if (pos == entry1)
+        pos = entry2;
+    list_add(pos, entry1);
+}
+
 /*
 * Example:
 * struct foo* p = container_of(&p->entry, struct foo, entry);
