@@ -13,7 +13,7 @@
 #define PAGE_MASK 0xfffff000
 #define PGSIZE 0x1000
 #define PGD_COUNT (PGSIZE / sizeof(uint32_t))
-// #define PTE_SIZE (PGSIZE / 32)
+#define PTE_SIZE (PGSIZE / sizeof(uint32_t))
 #define PGD_INDEX(x) (((x) >> 22) & 0x3ff)
 #define PTE_INDEX(x) (((x) >> 12) & 0x3ff)
 #define OFF_INDEX(x) ((x)&0xfff)

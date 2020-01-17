@@ -1,7 +1,7 @@
 #include <vmm.h>
 
 uint32_t kernel_pgd[PGD_COUNT] __attribute__((aligned(PGSIZE)));
-static uint32_t kernel_pte[PTE_COUNT][PGSIZE] __attribute__((aligned(PGSIZE)));
+static uint32_t kernel_pte[PTE_COUNT][PTE_SIZE] __attribute__((aligned(PGSIZE)));
 
 void init_vmm()
 {
@@ -9,7 +9,7 @@ void init_vmm()
     {
         kernel_pgd[i] = ((uint32_t)kernel_pte[j] - PAGE_OFFSET) | PG_P | PG_W;
     }
-    for (uint32_t i = 1; i < PTE_COUNT * PGSIZE; ++i)
+    for (uint32_t i = 1; i < PTE_COUNT * PTE_SIZE; ++i)
     {
         ((uint32_t *)kernel_pte)[i] = (i << 12) | PG_P | PG_W;
     }
