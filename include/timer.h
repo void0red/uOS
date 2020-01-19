@@ -3,5 +3,7 @@
 
 #include <types.h>
 #include <idt.h>
+#include <task.h>
+
 void init_timer(uint32_t frequency);
 #endif

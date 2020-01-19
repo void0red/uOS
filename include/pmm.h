@@ -4,8 +4,8 @@
 #include <printk.h>
 #include <debug.h>
 
-#define STACK_SIZE 1 << 13
-#define PMM_MAX_SIZE 512 * (1 << 20)
+#define STACK_SIZE (1 << 13)
+#define PMM_MAX_SIZE (512 * (1 << 20))
 #define PGSIZE 0x1000
 #define PAGE_MAX_SIZE (PMM_MAX_SIZE / PGSIZE)
 #define PHY_PAGE_MASK 0xfffff000

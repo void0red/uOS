@@ -3,15 +3,19 @@
 #include <types.h>
 #include <pmm.h>
 #include <vmm.h>
+#include <list.h>
+#include <heap.h>
+
 typedef enum
 {
     TASK_UNINT,
+    TASK_READY,
     TASK_SLEEPING,
     TASK_RUNNING,
     TASK_ZOMBIE
 } task_state;
 
-struct context
+typedef struct _context
 {
     uint32_t esp;
     uint32_t ebp;
@@ -19,7 +23,7 @@ struct context
     uint32_t esi;
     uint32_t edi;
     uint32_t eflags;
-};
+} context_t;
 
 struct mm_struct
 {
@@ -28,15 +32,26 @@ struct mm_struct
 
 typedef uint32_t pid_t;
 
-struct task_struct
+typedef struct _task
 {
     volatile task_state state;
     pid_t pid;
     void *stack;
     struct mm_struct *mm;
-    struct context context;
-    struct task_struct *next;
-};
+    context_t context;
+    list_head_t entry;
+} task_t;
 
-extern pid_t current;
+static pid_t current_pid = 0;
+extern uint32_t bootstack;
+
+typedef int32_t (*fn)(void *);
+int32_t kthread_spawn(fn func, void *args);
+void kthread_exit();
+
+void init_sched();
+void schedule();
+void change_task(task_t *next);
+void switch_to(context_t *prev, context_t *next);
+
 #endif
